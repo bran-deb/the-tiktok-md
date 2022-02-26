@@ -1,0 +1,28 @@
+{
+  "name": "tiktok",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "co":"sui-mono commit",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
+  "devDependencies": {
+    "@s-ui/mono": "^2.21.0",
+    "@types/react": "17.0.33",
+    "@types/react-dom": "17.0.10",
+    "@vitejs/plugin-react": "1.0.7",
+    "typescript": "4.5.5",
+    "vite": "2.8.4"
+  },
+  "-eslintConfig": {
+    "extends": [
+      "./node_modules/standard/eslintrc.json"
+    ]
+  }
+}
