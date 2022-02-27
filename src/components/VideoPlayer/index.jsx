@@ -1,36 +1,44 @@
+import clsx from 'clsx'
 import { useRef, useState } from 'react'
 import styles from './styles.module.css'
+import VideoPlayerActions from './VideoPlayerActions'
 
-const SRC = 'https://v16-webapp.tiktok.com/8e3595165361140a0844d6b0cb025e9c/621a0833/video/tos/useast2a/tos-useast2a-ve-0068c004/e619aecff93b4162b854fd9d8cd15ec1/?a=1988&br=3488&bt=1744&cd=0%7C0%7C1%7C0&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=XOQ9-3.nnz7Thsr22DXq&l=202202260459520102230160200A3BBC1E&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=amt3eDw6Zmx4OjMzNzczM0ApMzk4ZmloZWVpN2Y6OGc0ZGdxYm5wcjRfL3NgLS1kMTZzc2IxYy1fLTZgXmAzYy5fMGI6Yw%3D%3D&vl=&vr='
 
-export default function VideoPlayer() {
+export default function VideoPlayer({ src }) {
 
     const [playing, setPlaying] = useState(false)
-    const video = useRef()
+    const video = useRef(null)
 
     const handlePlay = () => {
-        if (playing) {
-            video.current.pause()
-        } else {
-            video.current.play()
-        }
+        //destructuring de video y renombrado de current
+        const { current: videoElement } = video
+        playing
+            ? videoElement.pause()
+            : videoElement.play()
+
         setPlaying(!playing)
     }
-
+    //ClassName dinamica de boton play(default{conditional})
+    const playerClassName = clsx(
+        styles.player,                  //default
+        { [styles.hidden]: playing }    //si esta playing:true es hidden
+    )
 
     return (
-        <div>
+        <div className={styles.wrapper}>
             <video
                 muted
+                loop
                 className={styles.video}
-                src={SRC}
                 controls={false}
+                src={src}
                 ref={video}
+                onClick={handlePlay}
             />
-            <button
-                className={styles.player}
-                onClick={handlePlay}>
-            </button>
+            <i
+                className={playerClassName} //classname dinamica
+                onClick={handlePlay} />
+            <VideoPlayerActions />
         </div>
     )
 }
