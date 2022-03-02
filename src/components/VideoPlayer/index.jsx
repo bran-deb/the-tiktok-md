@@ -1,10 +1,12 @@
 import clsx from 'clsx'
+
 import { useRef, useState } from 'react'
-import styles from './styles.module.css'
 import VideoPlayerActions from './VideoPlayerActions'
+import { VideoDescription } from '../VideoDescription'
+import styles from './styles.module.css'
 
 
-export default function VideoPlayer({ src }) {
+export default function VideoPlayer({ author, albumCover, description, src, songTitle }) {
 
     const [playing, setPlaying] = useState(false)
     const video = useRef(null)
@@ -39,6 +41,12 @@ export default function VideoPlayer({ src }) {
                 className={playerClassName} //classname dinamica
                 onClick={handlePlay} />
             <VideoPlayerActions />
+            <VideoDescription
+                albumCover={albumCover}
+                author={author}
+                description={description}
+                songTitle={songTitle}
+            />
         </div>
     )
 }
