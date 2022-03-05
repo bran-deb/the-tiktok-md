@@ -1,25 +1,15 @@
 import clsx from 'clsx'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import VideoPlayerActions from './VideoPlayerActions'
 import { VideoDescription } from '../VideoDescription'
 import styles from './styles.module.css'
+import useIntersectionVideoPlayer from '../../hooks/useIntersectionVideoPlayer'
 
 
-export default function VideoPlayer({ author, albumCover, description, src, songTitle }) {
-
-    const [playing, setPlaying] = useState(false)
+export default function VideoPlayer({ avatar, username, albumCover, description, src, songTitle }) {
     const video = useRef(null)
-
-    const handlePlay = () => {
-        //destructuring de video y renombrado de current
-        const { current: videoElement } = video
-        playing
-            ? videoElement.pause()
-            : videoElement.play()
-
-        setPlaying(!playing)
-    }
+    const { playing, handlePlay } = useIntersectionVideoPlayer({ video })
     //ClassName dinamica de boton play(default{conditional})
     const playerClassName = clsx(
         styles.player,                  //default
@@ -40,10 +30,13 @@ export default function VideoPlayer({ author, albumCover, description, src, song
             <i
                 className={playerClassName} //classname dinamica
                 onClick={handlePlay} />
-            <VideoPlayerActions />
+            <VideoPlayerActions
+                avatar={avatar}
+                username={username}
+            />
             <VideoDescription
                 albumCover={albumCover}
-                author={author}
+                username={username}
                 description={description}
                 songTitle={songTitle}
             />
