@@ -7,7 +7,9 @@ import styles from './styles.module.css'
 import useIntersectionVideoPlayer from '../../hooks/useIntersectionVideoPlayer'
 
 
-export default function VideoPlayer({ avatar, username, albumCover, description, src, songTitle }) {
+export default function VideoPlayer(props) {
+    const { src } = props
+
     const video = useRef(null)
     const { playing, handlePlay } = useIntersectionVideoPlayer({ video })
     //ClassName dinamica de boton play(default{conditional})
@@ -19,7 +21,6 @@ export default function VideoPlayer({ avatar, username, albumCover, description,
     return (
         <div className={styles.wrapper}>
             <video
-                muted
                 loop
                 className={styles.video}
                 controls={false}
@@ -30,16 +31,8 @@ export default function VideoPlayer({ avatar, username, albumCover, description,
             <i
                 className={playerClassName} //classname dinamica
                 onClick={handlePlay} />
-            <VideoPlayerActions
-                avatar={avatar}
-                username={username}
-            />
-            <VideoDescription
-                albumCover={albumCover}
-                username={username}
-                description={description}
-                songTitle={songTitle}
-            />
+            <VideoPlayerActions {...props} />
+            <VideoDescription {...props} />
         </div>
     )
 }
